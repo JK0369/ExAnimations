@@ -133,6 +133,44 @@ final class ViewController: UIViewController {
       }
     )
     
+    let springAnimationSecondAction = UIAction(
+      title: "스프링 애니메이션 - (UIView.animate)",
+      handler: { _ in
+        self.animationTargetView.snp.remakeConstraints {
+          $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(300)
+          $0.centerX.equalToSuperview()
+          $0.size.equalTo(120)
+        }
+
+        UIView.animate(
+          withDuration: 2,
+          delay: 0,
+          usingSpringWithDamping: 0.2,
+          initialSpringVelocity: 2,
+          animations: self.view.layoutIfNeeded
+        )
+      }
+    )
+    
+    let flipAnimationSecondAction = UIAction(
+      title: "뒤집기 애니메이션 - (UIView.animate)",
+      handler: { _ in
+        self.animationTargetView.snp.remakeConstraints {
+          $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(300)
+          $0.centerX.equalToSuperview()
+          $0.size.equalTo(120)
+        }
+
+        UIView.transition(
+          with: self.animationTargetView,
+          duration: 1,
+          options: .transitionFlipFromLeft,
+          animations: self.view.layoutIfNeeded,
+          completion: nil
+        )
+      }
+    )
+    
     self.pullDownButton.menu = UIMenu(
       title: "애니메이션 옵션",
       image: nil,
@@ -143,7 +181,9 @@ final class ViewController: UIViewController {
         autolayoutAnimationAction,
         singleKeyframeAnimationAction,
         singleKeyframeAnimationSecondAction,
-        multiKeyframeAnimationAction
+        multiKeyframeAnimationAction,
+        springAnimationSecondAction,
+        flipAnimationSecondAction
       ]
     )
   }
